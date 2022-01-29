@@ -8,7 +8,7 @@ const getPayloadNoOrder = async () => {
   const rssData = await getRSSFeed(rssUrl);
 
   const payload = formatPayload(rssData);
-  loggerService.info(payload);
+  loggerService.debug(payload);
 
   return payload;
 };
