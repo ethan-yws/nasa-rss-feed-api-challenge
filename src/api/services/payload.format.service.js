@@ -39,9 +39,9 @@ const formatPayload = (rssData, order) => {
   });
 
   return {
-    title: title,
-    description: description,
-    episodes: episodes,
+    title,
+    description,
+    episodes,
   };
 };
 
