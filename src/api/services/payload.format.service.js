@@ -6,6 +6,12 @@ const {
   getFirstTenEpisodes,
 } = require('./episodes.sort.service');
 
+/**
+ * formatting rssData to payload we need
+ * @param rssData
+ * @param order
+ * @returns
+ */
 const formatPayload = (rssData, order) => {
   // destructure the data we need from rssData
   const { title, description, items } = rssData;
@@ -20,16 +26,18 @@ const formatPayload = (rssData, order) => {
     episodes = getFirstTenEpisodes(items);
   } else {
     // when no order required
-    episodes = items.slice(0, 10).map((el) => {
-      return {
-        title: el.title,
-        audioUrl: el.enclosure?.url,
-        publishedDate: getAESTTime(el.pubDate),
-      };
-    });
+    episodes = items.slice(0, 10);
   }
 
   // format payload
+  episodes = episodes.map((el) => {
+    return {
+      title: el.title,
+      audioUrl: el.enclosure?.url,
+      publishedDate: getAESTTime(el.pubDate),
+    };
+  });
+
   return {
     title: title,
     description: description,
