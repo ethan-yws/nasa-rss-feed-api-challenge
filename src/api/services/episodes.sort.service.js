@@ -8,7 +8,7 @@ const getLatestTenEpisodes = (episodes) => {
   const sortedEpisodes = episodes.sort(
     (a, b) => new Date(b.pubDate) - new Date(a.pubDate)
   );
-  // get the first 10 episodes
+  // get 10 episodes
   const latestTenEpisodes = sortedEpisodes.slice(0, 10);
 
   return latestTenEpisodes;
@@ -20,11 +20,11 @@ const getLatestTenEpisodes = (episodes) => {
  * @returns
  */
 const getFirstTenEpisodes = (episodes) => {
-  // sort by date in dsc order
+  // sort by date in asc order
   const sortedEpisodes = episodes.sort(
     (a, b) => new Date(a.pubDate) - new Date(b.pubDate)
   );
-  // get the first 10 episodes
+  // get 10 episodes
   const firstTenEpisodes = sortedEpisodes.slice(0, 10);
 
   return firstTenEpisodes;
