@@ -1,11 +1,9 @@
-const express = require('express')
-const app = express()
-const port = 3000
+const express = require('express');
+const { port } = require('./config/default.config');
+const app = express();
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+app.get('/');
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
-})
+  console.log(`NASA RSS Feed app listening at http://localhost:${port}`);
+});
