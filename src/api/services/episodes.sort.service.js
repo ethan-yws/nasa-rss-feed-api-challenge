@@ -1,33 +1,29 @@
 /**
- * get the latest 10 episodes
- * @param episodes
- * @returns
+ * sort episodes by pubDate in dsc order
+ * @param {Object[]} episodes
+ * @returns {Object[]} sorted array of episode objects
  */
-const getLatestTenEpisodes = (episodes) => {
+const sortByDateDsc = (episodes) => {
   // sort by date in dsc order
   const sortedEpisodes = episodes.sort(
     (a, b) => new Date(b.pubDate) - new Date(a.pubDate)
   );
-  // get 10 episodes
-  const latestTenEpisodes = sortedEpisodes.slice(0, 10);
 
-  return latestTenEpisodes;
+  return sortedEpisodes;
 };
 
 /**
- * get the first 10 episodes
- * @param episodes
- * @returns
+ * sort episodes by pubDate in asc order
+ * @param {Object[]} episodes
+ * @returns {Object[]} sorted array of episode objects
  */
-const getFirstTenEpisodes = (episodes) => {
+const sortByDateAsc = (episodes) => {
   // sort by date in asc order
   const sortedEpisodes = episodes.sort(
     (a, b) => new Date(a.pubDate) - new Date(b.pubDate)
   );
-  // get 10 episodes
-  const firstTenEpisodes = sortedEpisodes.slice(0, 10);
 
-  return firstTenEpisodes;
+  return sortedEpisodes;
 };
 
-module.exports = { getLatestTenEpisodes, getFirstTenEpisodes };
+module.exports = { sortByDateAsc, sortByDateDsc };

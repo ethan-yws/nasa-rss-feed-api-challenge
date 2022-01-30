@@ -1,18 +1,16 @@
 const loggerService = require('../common/logger/logger');
-const {
-  getPayloadNoOrder,
-  getPayloadWithOrder,
-} = require('../services/getPayload.service');
+const { getPayload } = require('../services/getPayload.service');
 
 /**
- * root route controller
+ * Root route controller
+ *
  * @param req
  * @param res
  */
 const getRSSFeedNoOrder = async (req, res) => {
   loggerService.info('>> calling controller::getRSSFeedNoOrder');
 
-  const payload = await getPayloadNoOrder();
+  const payload = await getPayload();
 
   loggerService.debug('>> getRSSFeedNoOrder::payload: ');
   loggerService.debug(payload);
@@ -22,6 +20,7 @@ const getRSSFeedNoOrder = async (req, res) => {
 
 /**
  * GET /sort controller
+ *
  * @param req
  * @param res
  */
@@ -31,7 +30,7 @@ const getRSSFeedSortByDate = async (req, res) => {
   );
   const { order } = req.query;
 
-  const payload = await getPayloadWithOrder(order);
+  const payload = await getPayload(order);
 
   loggerService.debug('>> getRSSFeedSortByDate::payload: ');
   loggerService.debug(payload);
