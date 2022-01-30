@@ -1,35 +1,36 @@
 const {
   convertISODateToAEST,
 } = require('../utilities/format-iso-date-to-AEST');
-const {
-  getLatestTenEpisodes,
-  getFirstTenEpisodes,
-} = require('./episodes.sort.service');
+const { sortByDateAsc, sortByDateDsc } = require('./episodes.sort.service');
 
 /**
  * formatting rssData to payload we need
- * @param rssData
- * @param order
- * @returns
+ *
+ * @param {Object[]} rssData
+ * @param {string} order
+ * @returns {Object} payload in the format we want
  */
 const formatPayload = (rssData, order) => {
   // destructure the data we need from rssData
   const { title, description, items } = rssData;
 
-  // get the 10 episodes by different order
-  let episodes;
+  // when no order required, keep the original order in rss data
+  let episodes = items;
+
   // when order=dsc
   if (order === 'dsc') {
-    episodes = getLatestTenEpisodes(items);
-  } else if (order === 'asc') {
-    // when order=asc
-    episodes = getFirstTenEpisodes(items);
-  } else {
-    // when no order required
-    episodes = items.slice(0, 10);
+    episodes = sortByDateDsc(items);
   }
 
-  // format payload
+  // when order=asc
+  if (order === 'asc') {
+    episodes = sortByDateAsc(items);
+  }
+
+  // get the first 10 episodes in array as we need
+  episodes = getFirstTenEpisodes(episodes);
+
+  // restructure episodes to the expected format
   episodes = episodes.map((el) => {
     return {
       title: el.title,
@@ -38,6 +39,7 @@ const formatPayload = (rssData, order) => {
     };
   });
 
+  // construct and response the expected payload
   return {
     title,
     description,
@@ -47,9 +49,19 @@ const formatPayload = (rssData, order) => {
 
 /**
  * Convert time to AEST format
+ *
  * @param {string} time
- * @returns date string in AEST format
+ * @returns {string} date string in AEST format
  */
-const getAESTTime = (time) => convertISODateToAEST(new Date(time));
+const getAESTTime = (time) =>
+  convertISODateToAEST(new Date(time).toISOString());
+
+/**
+ * Get the first 10 episodes in given array
+ *
+ * @param {Object[]} episodes
+ * @returns {Object[]} the first 10 episodes
+ */
+const getFirstTenEpisodes = (episodes) => episodes.slice(0, 10);
 
 module.exports = { formatPayload };
